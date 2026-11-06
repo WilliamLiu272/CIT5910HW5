@@ -1,7 +1,19 @@
-public class WordRecommender {
+import java.util.Scanner;
 
-    public WordRecommender(String dictionaryFile) {    
+public class WordRecommender {
+    private HashSet<String> dict = new HashSet<>();
+
+    //engDictionary.txt
+    public WordRecommender(String dictionaryFile) {
       // TODO: change this!
+        // adding all the words in the file to a hashset
+        try (Scanner scanner = new Scanner(new FileInputStream(dictionaryFile))){
+            while (scanner.hasNext()){
+                this.dict.add(scanner.next());
+            }
+        } catch (IOException e) {
+            System.out.println("Dictionary File Doesn't Exist");
+        }
     }
   
     public double getSimilarity(String word1, String word2) {
