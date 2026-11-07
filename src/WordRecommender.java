@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class WordRecommender {
     private HashSet<String> dict = new HashSet<>();
@@ -31,24 +32,24 @@ public class WordRecommender {
     // You can of course write other methods as well.
 
     private double commonPercent(String user_str, String dict_str){
-        // store both string into seperate harsets for commonPercent calculation
-        Hashset<String> str1 = new Hashset<>();
-        Hashset<String> str2 = new Hashset<>();
-        for (char i : user_str){
+        // store both string into separate hashsets for commonPercent calculation
+        HashSet<Character> str1 = new HashSet<>();
+        HashSet<Character> str2 = new HashSet<>();
+        for (char i : user_str.toCharArray()){
             str1.add(i);
         }
-        for (char i : dict_str){
+        for (char i : dict_str.toCharArray()){
             str2.add(i);
         }
 
-        Set<Integer> unionSet = new HashSet<>(str1);
+        HashSet<Character> unionSet = new HashSet<>(str1);
         unionSet.addAll(str2);
-        union = unionSet.size();
+        int union = unionSet.size();
 
-        Set<Integer> intersectionSet = new HashSet<>(str1);
+        HashSet<Character> intersectionSet = new HashSet<>(str1);
         intersectionSet.retainAll(str2);
-        intersection = intersectionSet.size();
+        int intersection = intersectionSet.size();
 
-        return intersection/union;
+        return (double)intersection/union;
     }
   }
