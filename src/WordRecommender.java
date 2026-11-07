@@ -4,6 +4,10 @@ import java.io.*;
 public class WordRecommender {
     private HashSet<String> dict = new HashSet<>();
 
+    public static void main(String[] args) {
+
+    }
+
     //engDictionary.txt
     public WordRecommender(String dictionaryFile) {
       // TODO: change this!
@@ -25,13 +29,31 @@ public class WordRecommender {
     }
   
     public ArrayList<String> getWordSuggestions(String word, int tolerance, double commonPercent, int topN) {
-      // TODO: change this!
-      return null;
+        PriorityArray priorityArray = new PriorityArray(topN);
+        // tolerance range
+        int min = word.length() - tolerance;
+        int max = word.length() + tolerance;
+
+        // store all candidates in a arrayList
+        if (dict != null) {
+            for  (String s : dict) {
+                double cp = commonPercent(word, s);
+                // filters
+                if ((cp >= commonPercent) && (min <= s.length()) && (s.length() <= max)) {
+                    double sim = this.getSimilarity(word, s);
+                    priorityArray.add(s, sim);
+                }
+            }
+        } else {
+            throw new NullPointerException("Dictionary File is Null");
+        }
+
+      return priorityArray.getTopN();
     }
   
     // You can of course write other methods as well.
 
-    private double commonPercent(String user_str, String dict_str){
+    private static double commonPercent(String user_str, String dict_str){
         // store both string into separate hashsets for commonPercent calculation
         HashSet<Character> str1 = new HashSet<>();
         HashSet<Character> str2 = new HashSet<>();
