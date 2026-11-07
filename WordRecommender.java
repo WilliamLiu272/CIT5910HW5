@@ -18,6 +18,8 @@ public class WordRecommender {
   
     public double getSimilarity(String word1, String word2) {
       // TODO: change this!
+
+
       return 0.0;
     }
   
@@ -27,4 +29,26 @@ public class WordRecommender {
     }
   
     // You can of course write other methods as well.
+
+    private double commonPercent(String user_str, String dict_str){
+        // store both string into seperate harsets for commonPercent calculation
+        Hashset<String> str1 = new Hashset<>();
+        Hashset<String> str2 = new Hashset<>();
+        for (char i : user_str){
+            str1.add(i);
+        }
+        for (char i : dict_str){
+            str2.add(i);
+        }
+
+        Set<Integer> unionSet = new HashSet<>(str1);
+        unionSet.addAll(str2);
+        union = unionSet.size();
+
+        Set<Integer> intersectionSet = new HashSet<>(str1);
+        intersectionSet.retainAll(str2);
+        intersection = intersectionSet.size();
+
+        return intersection/union;
+    }
   }
