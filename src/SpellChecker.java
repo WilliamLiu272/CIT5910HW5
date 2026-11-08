@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class SpellChecker {
@@ -10,9 +12,30 @@ public class SpellChecker {
     }
   
     public void start() {
+        String dictionaryFilename = getDictionaryFile();
       // TODO: Complete the body of this method, as necessary.
       inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
+
+    private String getDictionaryFile(){
+        while (true) {
+
+            System.out.println(Util.DICTIONARY_PROMPT);
+            String filename = inputReader.nextLine();
+            try{
+                Scanner fileReader = new Scanner(new File(filename));
+                fileReader.close();
+                System.out.printf(
+                        Util.DICTIONARY_SUCCESS_NOTIFICATION,
+                        filename
+                );
+                return filename;
+
+            } catch (FileNotFoundException e){
+                System.out.println(Util.FILE_OPENING_ERROR);
+            }
+        }
+    }
+}
   
     // You can of course write other methods as well.
-  }
