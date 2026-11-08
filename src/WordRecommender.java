@@ -69,7 +69,7 @@ public class WordRecommender {
   
     // You can of course write other methods as well.
 
-    private static double commonPercent(String user_str, String dict_str){
+    static double commonPercent(String user_str, String dict_str){
         // store both string into separate hashsets for commonPercent calculation
         HashSet<Character> str1 = new HashSet<>();
         HashSet<Character> str2 = new HashSet<>();
