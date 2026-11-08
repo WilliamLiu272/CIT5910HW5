@@ -59,7 +59,7 @@ public class SpellChecker {
 
                 return filename;
             } catch (FileNotFoundException e){
-                System.out.println(Util.FILE_OPENING_ERROR);
+                System.out.printf(Util.FILE_OPENING_ERROR);
             }
         }
     }
@@ -68,7 +68,7 @@ public class SpellChecker {
         if (filename.endsWith(".txt")){
             return filename.substring(
                     0, filename.length() - 4
-            ) +"_chk_txt";
+            ) +"_chk.txt";
         }
         return filename + "_chk.txt";
     }
