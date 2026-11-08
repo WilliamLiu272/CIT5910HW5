@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class SpellChecker {
 
@@ -36,7 +37,7 @@ public class SpellChecker {
                 new WordRecommender(dictionaryFilename);
 
         //Check words & handle user choices
-        checkWords(textFilename, dictionary, recommender);
+        checkWords(textFilename, outputFileName,dictionary, recommender);
 
         // TODO: Write corrected words to output file.
 
@@ -115,16 +116,20 @@ public class SpellChecker {
 
     private void checkWords(
             String filename,
+            String outputFilename,
             HashSet<String> dictionary,
             WordRecommender recommender
     ) {
 
-        try (Scanner fileReader =
-                     new Scanner(new File(filename))) {
+        try (
+                Scanner fileReader = new Scanner(new File(filename));
+                PrintWriter writer = new PrintWriter(outputFilename)
+        ){
 
             while (fileReader.hasNext()) {
 
                 String word = fileReader.next();
+                String correctedWord = word;
 
                 if (!dictionary.contains(word)) {
 
@@ -158,11 +163,11 @@ public class SpellChecker {
                     }
 
                     //Ask user what to do
-                    String correctedWord =
-                            handleMisspelledWord(word, suggestions);
+                    correctedWord = handleMisspelledWord(word, suggestions);
 
                     //Write correctedWord to a file.
                 }
+                writer.println(correctedWord);
             }
 
         } catch (FileNotFoundException e) {
