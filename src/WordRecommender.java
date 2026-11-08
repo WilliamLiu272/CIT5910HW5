@@ -2,11 +2,9 @@ import java.util.*;
 import java.io.*;
 
 public class WordRecommender {
-    private HashSet<String> dict = new HashSet<>();
+    private final HashSet<String> dict = new HashSet<>();
 
-    //engDictionary.txt
     public WordRecommender(String dictionaryFile) {
-      // TODO: change this!
         // adding all the words in the file to a hashset
         try (Scanner scanner = new Scanner(new FileInputStream(dictionaryFile))){
             while (scanner.hasNext()){
@@ -18,7 +16,6 @@ public class WordRecommender {
     }
 
     public double getSimilarity(String word1, String word2) {
-      // TODO: change this!
         int length = Math.min(word1.length(), word2.length());
         int leftSim = 0;
         int rightSim = 0;
@@ -46,13 +43,11 @@ public class WordRecommender {
         int min = word.length() - tolerance;
         int max = word.length() + tolerance;
 
-        // store all candidates in a arrayList
+        // store all candidates in a priorityArray
         for  (String s : dict) {
-            double cp = commonPercent(word, s);
             // filters
-            if ((min <= s.length()) && (s.length() <= max) && (cp >= commonPercent)) {
-                double sim = this.getSimilarity(word, s);
-                priorityArray.add(s, sim);
+            if ((min <= s.length()) && (s.length() <= max) && (commonPercent(word, s) >= commonPercent)) {
+                priorityArray.add(s, getSimilarity(word, s));
             }
         }
 

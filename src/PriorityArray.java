@@ -1,13 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PriorityArray {
-    private ArrayList<String> words = new ArrayList<>();
-    private ArrayList<Double> wordSimilarity = new ArrayList<>();
-    private ArrayList<String> sortedWords = new ArrayList<>();
-    private int size;
+    private final ArrayList<String> words = new ArrayList<>();
+    private final ArrayList<Double> wordSimilarity = new ArrayList<>();
+    private final int topN;
 
-    public PriorityArray(int size) {
-        this.size = size;
+    public PriorityArray(int topN) {
+        this.topN = topN;
     }
 
     // using a pair of parallel lists for words and their similarity values
@@ -17,34 +17,29 @@ public class PriorityArray {
     }
 
     public ArrayList<String> getTopN(){
+        ArrayList<String> result = new ArrayList<>();
+        // hashset stores the INDEX of the words added to the result list
+        HashSet<Integer> selected = new HashSet<>();
 
         // sort and get the top words from the list
-        while (sortedWords.size() < size){
-            double max = 0;
+        while (result.size() < topN && result.size() < words.size()) {
             int maxIndex = -1;
 
             //get the index of the most similar word from the list
             for (int i = 0; i < wordSimilarity.size(); i++){
-                if (wordSimilarity.get(i)  > max){
-                    max = wordSimilarity.get(i);
+                // check if the INDEX of the word is already taken
+                if (selected.contains(i)) continue;
+
+                if (maxIndex == -1 || wordSimilarity.get(i) > wordSimilarity.get(maxIndex)) {
                     maxIndex = i;
                 }
             }
 
-            if (maxIndex != -1){
-
-                // add the most similar word into sortedWords list
-                sortedWords.add(words.get(maxIndex));
-
-                //remove the most similar word from the list, so next iteration gets the next most similar word
-                wordSimilarity.remove(maxIndex);
-                words.remove(maxIndex);
-            } else {
-                break;
-            }
-
+            //update the result list and the hashset to keep track of the words taken
+            selected.add(maxIndex);
+            result.add(words.get(maxIndex));
         }
 
-        return sortedWords;
+        return result;
     }
 }
