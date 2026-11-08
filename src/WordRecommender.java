@@ -37,10 +37,6 @@ public class WordRecommender {
             }
         }
 
-        System.out.println("left: " + leftSim);
-        System.out.println("right: " + rightSim);
-        System.out.println("Similarity: " + (leftSim+rightSim)/2.0);
-
       return ((leftSim+rightSim)/2.0);
     }
 
@@ -51,17 +47,13 @@ public class WordRecommender {
         int max = word.length() + tolerance;
 
         // store all candidates in a arrayList
-        if (dict != null) {
-            for  (String s : dict) {
-                double cp = commonPercent(word, s);
-                // filters
-                if ((cp >= commonPercent) && (min <= s.length()) && (s.length() <= max)) {
-                    double sim = this.getSimilarity(word, s);
-                    priorityArray.add(s, sim);
-                }
+        for  (String s : dict) {
+            double cp = commonPercent(word, s);
+            // filters
+            if ((min <= s.length()) && (s.length() <= max) && (cp >= commonPercent)) {
+                double sim = this.getSimilarity(word, s);
+                priorityArray.add(s, sim);
             }
-        } else {
-            throw new NullPointerException("Dictionary File is Null");
         }
 
       return priorityArray.getTopN();
@@ -69,15 +61,15 @@ public class WordRecommender {
   
     // You can of course write other methods as well.
 
-    static double commonPercent(String user_str, String dict_str){
+    static double commonPercent(String userStr, String dictStr){
         // store both string into separate hashsets for commonPercent calculation
         HashSet<Character> str1 = new HashSet<>();
         HashSet<Character> str2 = new HashSet<>();
-        for (char i : user_str.toCharArray()){
-            str1.add(i);
+        for (char c : userStr.toCharArray()){
+            str1.add(c);
         }
-        for (char i : dict_str.toCharArray()){
-            str2.add(i);
+        for (char c : dictStr.toCharArray()){
+            str2.add(c);
         }
 
         HashSet<Character> unionSet = new HashSet<>(str1);

@@ -10,6 +10,7 @@ public class PriorityArray {
         this.size = size;
     }
 
+    // using a pair of parallel lists for words and their similarity values
     public void add(String word, double sim){
         words.add(word);
         wordSimilarity.add(sim);
@@ -30,12 +31,18 @@ public class PriorityArray {
                 }
             }
 
-            // add the most similar word into sortedWords list
-            sortedWords.add(words.get(maxIndex));
+            if (maxIndex != -1){
 
-            //remove the most similar word from the list, so next iteration gets the next most similar word
-            wordSimilarity.remove(maxIndex);
-            words.remove(maxIndex);
+                // add the most similar word into sortedWords list
+                sortedWords.add(words.get(maxIndex));
+
+                //remove the most similar word from the list, so next iteration gets the next most similar word
+                wordSimilarity.remove(maxIndex);
+                words.remove(maxIndex);
+            } else {
+                break;
+            }
+
         }
 
         return sortedWords;
