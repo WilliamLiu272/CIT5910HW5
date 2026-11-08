@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class PriorityArray {
-    private ArrayList<String> words;
-    private ArrayList<Double> wordSimilarity;
-    private ArrayList<String> sortedWords;
+    private ArrayList<String> words = new ArrayList<>();
+    private ArrayList<Double> wordSimilarity = new ArrayList<>();
+    private ArrayList<String> sortedWords = new ArrayList<>();
     private int size;
 
     public PriorityArray(int size) {

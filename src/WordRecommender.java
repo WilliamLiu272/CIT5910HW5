@@ -4,10 +4,6 @@ import java.io.*;
 public class WordRecommender {
     private HashSet<String> dict = new HashSet<>();
 
-    public static void main(String[] args) {
-
-    }
-
     //engDictionary.txt
     public WordRecommender(String dictionaryFile) {
       // TODO: change this!
@@ -20,14 +16,34 @@ public class WordRecommender {
             System.out.println("Dictionary File Doesn't Exist");
         }
     }
-  
+
     public double getSimilarity(String word1, String word2) {
       // TODO: change this!
+        int length = Math.min(word1.length(), word2.length());
+        int leftSim = 0;
+        int rightSim = 0;
 
+        // left similarity
+        for (int i = 0; i < length; i++){
+            if (word1.charAt(i) == word2.charAt(i)){
+                leftSim++;
+            }
+        }
 
-      return 0.0;
+        //right similarity
+        for (int i = 1; i <= length; i++){
+            if (word1.charAt(word1.length()-i) == word2.charAt(word2.length()-i)){
+                rightSim++;
+            }
+        }
+
+        System.out.println("left: " + leftSim);
+        System.out.println("right: " + rightSim);
+        System.out.println("Similarity: " + (leftSim+rightSim)/2.0);
+
+      return ((leftSim+rightSim)/2.0);
     }
-  
+
     public ArrayList<String> getWordSuggestions(String word, int tolerance, double commonPercent, int topN) {
         PriorityArray priorityArray = new PriorityArray(topN);
         // tolerance range
