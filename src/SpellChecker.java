@@ -13,6 +13,14 @@ public class SpellChecker {
   
     public void start() {
         String dictionaryFilename = getDictionaryFile();
+        String textFilename = getTextFile();
+        String outputFileName = getOutputFilename(textFilename);
+
+        System.out.printf(
+                Util.FILE_SUCCESS_NOTIFICATION,
+                textFilename,
+                outputFileName
+        );
       // TODO: Complete the body of this method, as necessary.
       inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
@@ -20,7 +28,7 @@ public class SpellChecker {
     private String getDictionaryFile(){
         while (true) {
 
-            System.out.println(Util.DICTIONARY_PROMPT);
+            System.out.printf(Util.DICTIONARY_PROMPT);
             String filename = inputReader.nextLine();
             try{
                 Scanner fileReader = new Scanner(new File(filename));
@@ -35,6 +43,29 @@ public class SpellChecker {
                 System.out.println(Util.FILE_OPENING_ERROR);
             }
         }
+    }
+    private String getTextFile(){
+        while(true){
+            System.out.printf(Util.FILENAME_PROMPT);
+            String filename = inputReader.nextLine();
+            try{
+                Scanner fileReader = new Scanner(new File(filename));
+                fileReader.close();
+
+                return filename;
+            } catch (FileNotFoundException e){
+                System.out.println(Util.FILE_OPENING_ERROR);
+            }
+        }
+    }
+    private String getOutputFilenames(String filename){
+
+        if (filename.endsWith(".txt")){
+            return filename.substring(
+                    0, filename.length() - 4
+            ) +"_chk_txt";
+        }
+        return filename + "_chk.txt";
     }
 }
   //test
