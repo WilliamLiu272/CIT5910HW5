@@ -1,6 +1,8 @@
-car
 cart
 bar
-rat
-abcd
-system
+races
+arc
+scarce
+crew
+dog
+cub
